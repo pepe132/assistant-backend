@@ -6,7 +6,7 @@ const Conversation = require("../models/conversation.model");
 
 
 const openai = new OpenAI({
-    apiKey:'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',
+    apiKey:process.env.OPENAI_API_KEY,
 });
 
   
@@ -15,14 +15,6 @@ export const getConversation=async(req:Request,res:Response)=>{
   
     const {message,user_id}=req.body;
 
-    const userDB=await Conversation.findOne({user_id});
-
-    if (userDB) {//si categoria db no es nula
-        res.status(400).json({
-            msg:`El usuario ${userDB.user} ya existe`
-        }) 
-    }
-    
 
     const chatArray: Array<any> = [{
       role:'assistant',
